@@ -149,8 +149,6 @@ collections:
     defaults:
       layout: post
     output: true
-  projects:
-    output: true
 
 # -----------------------------------------------------------------------------
 # Jekyll settings
@@ -187,6 +185,9 @@ exclude:
   - package.json
   - package-lock.json
   - _pages/about_einstein.md
+  - _pages/cv.md
+  - _pages/dropdown.md
+  - _pages/profiles.md
   - purgecss.config.js
   - README.md
   - readme_preview/
@@ -253,7 +254,7 @@ jekyll-archives:
       tags: "/blog/:type/:name/"
       categories: "/blog/:type/:name/"
   books:
-    enabled: [year, tags, categories] # enables year, tag and category archives (remove if you need to disable one of them).
+    enabled: [] # Disable year, tag and category archives for books to remove submenus
 
 display_tags: ["formatting", "images", "links", "math", "code", "blockquotes"] # these tags will be displayed on the front page of your blog
 display_categories: ["external-services"] # these categories will be displayed on the front page of your blog
