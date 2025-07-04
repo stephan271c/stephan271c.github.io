@@ -108,7 +108,7 @@ Barrington's theorem <d-cite key="BARRINGTON1989150"></d-cite> states that any c
 
 
 
-## No. of Layers vs Sequence Length
+### No. of Layers vs Sequence Length
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
@@ -169,19 +169,19 @@ Note that for a real valued triangular matrix, all of its eigenvalues are real, 
 
 *Proof idea:* It's very similar to the proof of theorem 1, although with negative eigenvalues, a single layer LRNN will have its hidden state alternate between $$2$$ values, for sequence length $$k$$ large enough. For $$L$$ layers, the function $$k \mapsto \hat H_k$$ will be periodic with period $$2^L$$, so if $$m \neq 2^n$$ for some $$n$$, then the LRNN cannot recognize modular counting.
 
-Architectures that allow for negative eigenvalues and non-triangular matrices include modifications of DeltaNet and DeltaProduct, as well as RWKV v7. In DeltaProduct, the state-transition matrix $$A(x_{i})$$ is defined as the product of $$n_h$$ generalized Householder matrices: $$A(x_{i}) = \prod_{j=1}^{n_{h}}(I - \beta_{i,j}k_{i,j}k_{i,j}^{\top}).$$ This construction enables a rank $$n_h$$​ update to the hidden state at each step. Since a $$k\times k$$ permutation matrix can be formed by a product of $$k-1$$ GH matrices, a single layer DeltaProduct model with $$n_h=k-1$$ and $$n=k$$ can solve the word problem of the permutation group on $$k$$ elements (see theorem 3 in  <d-cite key="grazzi2025unlockingstatetrackinglinearrnns"></d-cite>): simply choose generalized Householder matrices such that $$A(x_i)\in \mathbb{R}^{k \times k}$$ is the permutation matrix representing $$x_i$$ and  $$H_i \in \mathbb{R}^{k\times 1}$$ is the resulting permutation on $$k$$ elements after $$i$$ permutation operations. 
+Architectures that allow for negative eigenvalues and non-triangular matrices include modifications of DeltaNet and DeltaProduct, as well as RWKV v7. In DeltaProduct, the state-transition matrix $$A(x_{i})$$ is defined as the product of $$n_h$$ generalized Householder matrices: $$A(x_{i}) = \prod_{j=1}^{n_{h}}(I - \beta_{i,j}k_{i,j}k_{i,j}^{\top}).$$ To allow for negative eigenvalues, they replace $\beta_{i,j}$ with $2\beta_{i,j}$, where $\beta_{i,j}\in [0,1]$ is an input dependent gating factor. This construction enables a rank $$n_h$$​ update to the hidden state at each step. Since a $$k\times k$$ permutation matrix can be formed by a product of $$k-1$$ GH matrices, a single layer DeltaProduct model with $$n_h=k-1$$ and $$n=k$$ can solve the word problem of the permutation group on $$k$$ elements (see theorem 3 in  <d-cite key="grazzi2025unlockingstatetrackinglinearrnns"></d-cite>): simply choose generalized Householder matrices such that $$A(x_i)\in \mathbb{R}^{k \times k}$$ is the permutation matrix representing $$x_i$$ and  $$H_i \in \mathbb{R}^{k\times 1}$$ is the resulting permutation on $$k$$ elements after $$i$$ permutation operations. 
 
 
 <div class="row mt-3">
     <div class="col-sm-6 mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/2025-07-04-State-Tracking/image1.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+        {% include figure.liquid loading="lazy" path="assets/img/2025-07-04-State-Tracking/A5.png" class="img-fluid rounded z-depth-1" zoomable=true %}
     </div>
     <div class="col-sm-6 mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/2025-07-04-State-Tracking/image2.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+        {% include figure.liquid loading="lazy" path="assets/img/2025-07-04-State-Tracking/S5.png" class="img-fluid rounded z-depth-1" zoomable=true %}
     </div>
 </div>
 <div class="caption">
-    This is a single caption for both images above.
+    Figures from <d-cite key="siems2025deltaproductimprovingstatetrackinglinear"></d-cite>. Comparing accuracy vs sequence length for DeltaProduct models with $n_h$ GH matrices and 
 </div>
 
 In  <d-cite key="siems2025deltaproductimprovingstatetrackinglinear"></d-cite>, they empirically show that the word problem on a permutation group on $$5$$ elements can be solved with a single layer DeltaProduct with $$4$$ GH matrices. Interestingly, the model with $$2$$ $$GH$$ matrices is able to learn permutations from $$A_5$$ by exploiting the structure of the group.
