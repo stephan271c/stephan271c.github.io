@@ -93,8 +93,7 @@ Using log precision, Transformers are in $$TC^0$$ <d-cite key="merrill2023parall
 
 Recurrent Neural Networks (RNNs) can solve state tracking in a single layer. An RNN maps a sequence $$(x_1,...,x_T)$$ to $$(y_1,...y_T)$$ and is given by the recurrence
 $$h_{t+1}=g(h_t, x_t), \ y_t=dec(h_t,x_t)$$
-where $$g$$ and $$dec$$ are learnable, nonlinear functions. Let $$x_t=\sigma_t$$ and $$h_t =q_{t-1}$$ be the 1-hot vector representing the state. $$g(-,x_t)$$ can simulate the state transition function $$\delta (- ,\sigma_t)$$. (<d-cite key="merrill2025illusionstatestatespacemodels"></d-cite>, theorem 5.1) In particular, even if we constrain $$g(-,x_t)$$ to be a linear transformation, it can represent the state transition matrix $$M_{\sigma_t}$$, and so linear RNNs with general state matrix can also solve the state tracking problem.
-(unlocking state tracking paper)
+where $$g$$ and $$dec$$ are learnable, nonlinear functions. Let $$x_t=\sigma_t$$ and $$h_t =q_{t-1}$$ be the 1-hot vector representing the state. $$g(-,x_t)$$ can simulate the state transition function $$\delta (- ,\sigma_t)$$ (<d-cite key="merrill2025illusionstatestatespacemodels"></d-cite>, theorem 5.1). In particular, even if we constrain $$g(-,x_t)$$ to be a linear transformation, it can represent the state transition matrix $$M_{\sigma_t}$$, and so linear RNNs with general state matrix can also solve the state tracking problem.
 
 Although state tracking and other relevant problems lie in $$NC^1$$, we will focus on a specific synthetic task, to which any other task in $$NC^1$$ can be reduced.
 
@@ -105,7 +104,7 @@ Although state tracking and other relevant problems lie in $$NC^1$$, we will foc
 - For solvable groups, like $$A_4$$ and $$\mathbb{Z}_{60}$$, this is in $$TC^0$$ (via Khoan Rhoades theorem). 
 - For nonsolvable groups (such as $$A_5$$ and $$S_5$$), it is $$NC^1$$ complete.
 
-Note <d-cite key="BARRINGTON1989150"></d-cite> states that any circuit in $$NC^1$$, with input size $$n$$, can be reduced to a circuit calculating the word problem on $$A_5$$ of polynomial length in $$n$$. (Thms 1 and 5). This means solving the $$A_5$$​ word problem is, in a sense, as hard as any other problem in $$NC^1$$, including state tracking. We will therefore use the $$A_5$$​ word problem as a benchmark for evaluating model capabilities.
+ <d-cite key="BARRINGTON1989150"></d-cite> states that any circuit in $$NC^1$$, with input size $$n$$, can be reduced to a circuit calculating the word problem on $$A_5$$ of polynomial length in $$n$$. (Thms 1 and 5). This means solving the $$A_5$$​ word problem is, in a sense, as hard as any other problem in $$NC^1$$, including state tracking. We will therefore use the $$A_5$$​ word problem as a benchmark for evaluating model capabilities.
 
 
 
