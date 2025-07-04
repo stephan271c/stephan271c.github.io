@@ -133,7 +133,7 @@ In the figure, we see that for $$A_5$$, the transformer model needs more layers 
 
 ## Linear RNNs
 
-Linear Recurrent Neural Networks (also called state space models) are motivated by the goal of developing fast, efficient sequence models capable of performance comparable to Transformers, particularly in language modeling. Unlike a traditional RNN, the hidden state is updated through an affine transformation. The condition that it's affine allows us to use parallel associative scan for the forward pass. We'll follow notation from  <d-cite key="grazzi2025unlockingstatetrackinglinearrnns"></d-cite>
+Linear Recurrent Neural Networks (also called state space models) are motivated by the goal of developing fast, efficient sequence models capable of performance comparable to Transformers, particularly in language modeling. Unlike a traditional RNN, the hidden state is updated through an affine transformation. The condition that it's affine allows us to use parallel associative scan for the forward pass. We'll follow notation from  <d-cite key="grazzi2025unlockingstatetrackinglinearrnns"></d-cite>:
 
 **Definition:** A linear RNN layer is a function $$f_\theta : \mathbb{R}^l \times \mathbb{C}^{n\times d} \rightarrow   \mathbb{R}^l \times \mathbb{C}^{n\times d}$$ that maps an input, hidden state pair $$(x_t, H_{t-1})$$ to output, next hidden state pair $$(\hat y_t, H_{t})$$ in the following way:
 
@@ -172,15 +172,16 @@ Note that for a real valued triangular matrix, all of its eigenvalues are real, 
 Architectures that allow for negative eigenvalues and non-triangular matrices include modifications of DeltaNet and DeltaProduct, as well as RWKV v7. In DeltaProduct, the state-transition matrix $$A(x_{i})$$ is defined as the product of $$n_h$$ generalized Householder matrices: $$A(x_{i}) = \prod_{j=1}^{n_{h}}(I - \beta_{i,j}k_{i,j}k_{i,j}^{\top}).$$ This construction enables a rank $$n_h$$​ update to the hidden state at each step. Since a $$k\times k$$ permutation matrix can be formed by a product of $$k-1$$ GH matrices, a single layer DeltaProduct model with $$n_h=k-1$$ and $$n=k$$ can solve the word problem of the permutation group on $$k$$ elements (see theorem 3 in  <d-cite key="grazzi2025unlockingstatetrackinglinearrnns"></d-cite>): simply choose generalized Householder matrices such that $$A(x_i)\in \mathbb{R}^{k \times k}$$ is the permutation matrix representing $$x_i$$ and  $$H_i \in \mathbb{R}^{k\times 1}$$ is the resulting permutation on $$k$$ elements after $$i$$ permutation operations. 
 
 
-<div style="display: flex; justify-content: space-around; align-items: center;">
-  <div style="flex: 1; padding: 10px;">
-    <img src="/assets/images/State-Tracking/A5.png" alt="A5 word problem using gated DeltaProduct">
-    <p style="text-align: center;">Optional caption for image 1</p>
-  </div>
-  <div style="flex: 1; padding: 10px;">
-    <img src="/assets/images/State-Tracking/S5.png" alt="S5 word problem using gated DeltaProduct">
-    <p style="text-align: center;">Optional caption for image 2</p>
-  </div>
+<div class="row mt-3">
+    <div class="col-sm-6 mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/2025-07-04-State-Tracking/image1.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+    </div>
+    <div class="col-sm-6 mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/2025-07-04-State-Tracking/image2.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+    </div>
+</div>
+<div class="caption">
+    This is a single caption for both images above.
 </div>
 
 In  <d-cite key="siems2025deltaproductimprovingstatetrackinglinear"></d-cite>, they empirically show that the word problem on a permutation group on $$5$$ elements can be solved with a single layer DeltaProduct with $$4$$ GH matrices. Interestingly, the model with $$2$$ $$GH$$ matrices is able to learn permutations from $$A_5$$ by exploiting the structure of the group.
