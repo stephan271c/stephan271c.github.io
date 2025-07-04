@@ -18,7 +18,7 @@ chart:
 tikzjax: true
 typograms: true
 
-bibliography: 2025-06-28-State-Tracking.bib
+bibliography: 2025-07-04-State-Tracking.bib
 
 ---
 
@@ -125,7 +125,7 @@ In particular, in <d-cite key="li2024chainthoughtempowerstransformers"></d-cite>
 
 A similar idea to CoT is pursued in <d-cite key="liu2023transformerslearnshortcutsautomata"></d-cite>, called "scratchpad training" where the output tokens are interleaved with the input tokens $$(x_1,y_1,x_2,y_2,...,x_n,y_n)$$ and the model is trained autoregressively. Intuitively, these tasks are easier because the model can look at its intermediate results to perform the next calculation, avoiding the need for logarithmic depth.
 
-In the figure, we see that for $$A_5$$, the transformer model needs more layers to handle longer sequences, while the LSTM model can predict with just one layer. The transformer model in Chain of Thought mode also only needs 1 layer to solve this task. Interestingly, the word problem for $A_4\times \mathbb{Z}_5$ is almost as hard as the $A_5$ word problem.
+In the figure, we see that for $$A_5$$, the transformer model needs more layers to handle longer sequences, while the LSTM model can predict with just one layer. The transformer model in Chain of Thought mode also only needs 1 layer to solve this task. Interestingly, for the transformer model, the word problem for $A_4\times \mathbb{Z}_5$ is almost as hard as the $A_5$ word problem, requiring more layers as the sequence length increases.
 
 
 ## Linear RNNs
