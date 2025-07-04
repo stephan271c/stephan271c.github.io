@@ -1,8 +1,8 @@
 ---
 layout: distill
 title: State Tracking with Sequence Models
-description: solving word problems
-tags: state-tracking generalization
+description: Analyzing the theoretical limits of sequence models for state tracking and compositional reasoning
+tags: state-tracking circuit-complexity compositional-generalization transformers
 giscus_comments: true
 date: 2025-06-29
 featured: true
@@ -115,9 +115,6 @@ Barrington's theorem <d-cite key="BARRINGTON1989150"></d-cite> states that any c
         {% include figure.liquid loading="lazy" path="assets/img/2025-07-04-State-Tracking/graphs_3tasks.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
-<div class="caption">
-    This is a caption for my PNG image.
-</div>
 
 Now let's show some empirical results showing how transformers do on this problem. For $$G \in \{\mathbb{Z}_{60}, A_4 \times \mathbb{Z}_5, A_5 \}$$, we train llama based transformers to acheive >90% validation accuracy, following the experiment from <d-cite key="merrill2025illusionstatestatespacemodels"></d-cite>. We directly encode group elements into tokens instead of tokenizing its string based representation.
 
@@ -128,12 +125,12 @@ In particular, in <d-cite key="li2024chainthoughtempowerstransformers"></d-cite>
 
 A similar idea to CoT is pursued in <d-cite key="liu2023transformerslearnshortcutsautomata"></d-cite>, called "scratchpad training" where the output tokens are interleaved with the input tokens $$(x_1,y_1,x_2,y_2,...,x_n,y_n)$$ and the model is trained autoregressively. Intuitively, these tasks are easier because the model can look at its intermediate results to perform the next calculation, avoiding the need for logarithmic depth.
 
-In the figure, we see that for $$A_5$$, the transformer model needs more layers to handle longer sequences, while the LSTM model can predict with just one layer. The transformer model in Chain of Thought mode also only needs 1 layer to solve this task. Interestingly, the word problem for $A_4\times mathbb{Z}_5$ is almost as hard as the $A_5$ word problem.
+In the figure, we see that for $$A_5$$, the transformer model needs more layers to handle longer sequences, while the LSTM model can predict with just one layer. The transformer model in Chain of Thought mode also only needs 1 layer to solve this task. Interestingly, the word problem for $A_4\times \mathbb{Z}_5$ is almost as hard as the $A_5$ word problem.
 
 
 ## Linear RNNs
 
-Linear Recurrent Neural Networks (also called state space models) are motivated by the goal of developing fast, efficient sequence models capable of performance comparable to Transformers, particularly in language modeling. Unlike a traditional RNN, the hidden state is updated through an affine transformation. The condition that it's affine allows us to use parallel associative scan for the forward pass. We'll follow notation from  <d-cite key="grazzi2025unlockingstatetrackinglinearrnns"></d-cite>:
+Linear Recurrent Neural Networks are motivated by the goal of developing fast, efficient sequence models capable of performance comparable to Transformers, particularly in language modeling. Unlike a traditional RNN, the hidden state is updated through an affine transformation. The condition that it's affine allows us to use parallel associative scan for the forward pass. We'll follow notation from  <d-cite key="grazzi2025unlockingstatetrackinglinearrnns"></d-cite>:
 
 **Definition:** A linear RNN layer is a function $$f_\theta : \mathbb{R}^l \times \mathbb{C}^{n\times d} \rightarrow   \mathbb{R}^l \times \mathbb{C}^{n\times d}$$ that maps an input, hidden state pair $$(x_t, H_{t-1})$$ to output, next hidden state pair $$(\hat y_t, H_{t})$$ in the following way:
 
@@ -181,7 +178,7 @@ Architectures that allow for negative eigenvalues and non-triangular matrices in
     </div>
 </div>
 <div class="caption">
-    Figures from <d-cite key="siems2025deltaproductimprovingstatetrackinglinear"></d-cite>. Comparing accuracy vs sequence length for DeltaProduct models with $n_h$ GH matrices and 
+    Figures from <d-cite key="siems2025deltaproductimprovingstatetrackinglinear"></d-cite>. Comparing accuracy vs sequence length for modified DeltaProduct models with $n_h$ GH matrices and coefficients $2\beta_{i,j}$.
 </div>
 
 In  <d-cite key="siems2025deltaproductimprovingstatetrackinglinear"></d-cite>, they empirically show that the word problem on a permutation group on $$5$$ elements can be solved with a single layer DeltaProduct with $$4$$ GH matrices. Interestingly, the model with $$2$$ $$GH$$ matrices is able to learn permutations from $$A_5$$ by exploiting the structure of the group.
