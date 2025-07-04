@@ -104,20 +104,11 @@ Although state tracking and other relevant problems lie in $$NC^1$$, we will foc
 - For solvable groups, like $$A_4$$ and $$\mathbb{Z}_{60}$$, this is in $$TC^0$$ (via Khoan Rhoades theorem). 
 - For nonsolvable groups (such as $$A_5$$ and $$S_5$$), it is $$NC^1$$ complete.
 
- <d-cite key="BARRINGTON1989150"></d-cite> states that any circuit in $$NC^1$$, with input size $$n$$, can be reduced to a circuit calculating the word problem on $$A_5$$ of polynomial length in $$n$$. (Thms 1 and 5). This means solving the $$A_5$$​ word problem is, in a sense, as hard as any other problem in $$NC^1$$, including state tracking. We will therefore use the $$A_5$$​ word problem as a benchmark for evaluating model capabilities.
+Barrington's theorem <d-cite key="BARRINGTON1989150"></d-cite> states that any circuit in $$NC^1$$, with input size $$n$$, can be reduced to a circuit calculating the word problem on $$A_5$$ of polynomial length in $$n$$. (Thms 1 and 5). This means solving the $$A_5$$​ word problem is, in a sense, as hard as any other problem in $$NC^1$$, including state tracking. We will therefore use the $$A_5$$​ word problem as a benchmark for evaluating model capabilities.
 
 
 
-## No. of layers vs sequence length
-
-Now let's show some empirical results showing how transformers do on this problem. For $$G \in \{\mathbb{Z}_{60}, A_4 \times \mathbb{Z}_5, A_5 \}$$, we train llama based transformers to acheive >90% validation accuracy, following the experiment from <d-cite key="merrill2025illusionstatestatespacemodels"></d-cite>. We directly encode group elements into tokens instead of tokenizing its string based representation.
-Here, the standard task is: fix an maximum sequence length $$n$$. For $$k\leq n$$, given an input sequence $$(x_1,...,x_k)\in G^k$$, we want our model to calculate $$f_\theta(x_1,...,x_k)=y_k$$ where $$y_k=x_1 \cdot ...\cdot x_k$$. 
-
-
-The chain of thought task is: $$f_\theta (x_1,...,x_n, c, y_1,...,y_k)=y_{k+1}$$ where $$c$$ is a placeholder token. For $$k=0$$ we have $$f_\theta (x_1,...,x_n, c)=y_{1}$$. 
-In particular, it can solve the word problem on $$S_5$$ by using only a 2 layer transformer. <d-cite key="li2024chainthoughtempowerstransformers"></d-cite>
-
-A similar idea to CoT is pursued in <d-cite key="liu2023transformerslearnshortcutsautomata"></d-cite>, called "scratchpad training" where the output tokens are interleaved with the input tokens $$(x_1,y_1,x_2,y_2,...,x_n,y_n)$$ and the model is trained autoregressively. Intuitively, these tasks are easier because the model can look at its intermediate results to perform the next calculation, avoiding the need for logarithmic depth.
+## No. of Layers vs Sequence Length
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
@@ -128,7 +119,16 @@ A similar idea to CoT is pursued in <d-cite key="liu2023transformerslearnshortcu
     This is a caption for my PNG image.
 </div>
 
-Here we see that for $$A_5$$, the transformer model needs more layers to handle longer sequences, while the LSTM model can predict with just one layer. The transformer model in Chain of Thought mode also only needs 1 layer to solve this task. 
+Now let's show some empirical results showing how transformers do on this problem. For $$G \in \{\mathbb{Z}_{60}, A_4 \times \mathbb{Z}_5, A_5 \}$$, we train llama based transformers to acheive >90% validation accuracy, following the experiment from <d-cite key="merrill2025illusionstatestatespacemodels"></d-cite>. We directly encode group elements into tokens instead of tokenizing its string based representation.
+
+Here, the standard task is: fix an maximum sequence length $$n$$. For $$k\leq n$$, given an input sequence $$(x_1,...,x_k)\in G^k$$, we want our model to calculate $$f_\theta(x_1,...,x_k)=y_k$$ where $$y_k=x_1 \cdot ...\cdot x_k$$. 
+
+The chain of thought task is: $$f_\theta (x_1,...,x_n, c, y_1,...,y_k)=y_{k+1}$$ where $$c$$ is a placeholder token. For $$k=0$$ we have $$f_\theta (x_1,...,x_n, c)=y_{1}$$. 
+In particular, in <d-cite key="li2024chainthoughtempowerstransformers"></d-cite> they construct a 2 layer transformer that can solve the word problem on $$S_5$$.
+
+A similar idea to CoT is pursued in <d-cite key="liu2023transformerslearnshortcutsautomata"></d-cite>, called "scratchpad training" where the output tokens are interleaved with the input tokens $$(x_1,y_1,x_2,y_2,...,x_n,y_n)$$ and the model is trained autoregressively. Intuitively, these tasks are easier because the model can look at its intermediate results to perform the next calculation, avoiding the need for logarithmic depth.
+
+In the figure, we see that for $$A_5$$, the transformer model needs more layers to handle longer sequences, while the LSTM model can predict with just one layer. The transformer model in Chain of Thought mode also only needs 1 layer to solve this task. Interestingly, the word problem for $A_4\times mathbb{Z}_5$ is almost as hard as the $A_5$ word problem.
 
 
 ## Linear RNNs
