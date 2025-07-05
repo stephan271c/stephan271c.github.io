@@ -4,7 +4,7 @@ title: State Tracking with Sequence Models
 description: Analyzing the theoretical limits of sequence models for state tracking and compositional reasoning
 tags: state-tracking circuit-complexity compositional-generalization transformers
 giscus_comments: true
-date: 2025-06-29
+date: 2025-07-04
 featured: true
 mermaid:
   enabled: true
