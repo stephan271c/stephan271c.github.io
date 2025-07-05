@@ -7,14 +7,14 @@ ninja.data = [{
     title: "about",
     section: "Navigation",
     handler: () => {
-      window.location.href = "/al-folio/";
+      window.location.href = "/";
     },
   },{id: "nav-blog",
           title: "blog",
           description: "",
           section: "Navigation",
           handler: () => {
-            window.location.href = "/al-folio/blog/";
+            window.location.href = "/blog/";
           },
         },{id: "post-state-tracking-with-sequence-models",
         
@@ -24,7 +24,7 @@ ninja.data = [{
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/al-folio/blog/2025/State-Tracking/";
+            window.location.href = "/blog/2025/State-Tracking/";
           
         },
       },{
@@ -46,7 +46,7 @@ ninja.data = [{
         title: 'RSS Feed',
         section: 'Socials',
         handler: () => {
-          window.open("/al-folio/feed.xml", "_blank");
+          window.open("/feed.xml", "_blank");
         },
       },{
       id: 'light-theme',
