@@ -95,6 +95,7 @@ We analyze a family of boolean circuits $$\{C_n\}_{n=0}^\infty$$ to describe how
 The definitions above can be extended to functions with multiple output bits: let $$in(n), out(n)$$ be non-negative, non-decreasing, polynomially bounded functions, and consider boolean circuits $$C_n:\{0,1\}^{in(n)} \rightarrow \{0,1\}^{out(n)}$$. For example, $$n$$-bit addition is a function $$f:\{0,1\}^{2n}\rightarrow \{0,1\}^{n+1}$$ <d-cite key="doi:10.1137/0215070"></d-cite>.
 
 Although state tracking and related problems of interest will be represented with binary valued functions, some intermediate computations will involve multiple bit outputs. The main point is that some functions can be computed with constant depth circuits (in $$TC^0$$), while others need logarithmic depth (in $$NC^1$$). 
+
 **Examples:** 
 - $$n$$ bit addition, multiplication and division is in $$TC^0$$ 
 - $$L_{PARITY}$$ is in $$TC^0$$
@@ -109,7 +110,9 @@ Note that the state tracking problem can be solved by a circuit in $$NC^1$$ by f
 Using log precision, Transformers are in $$TC^0$$ <d-cite key="merrill2023parallelismtradeofflimitationslogprecision"></d-cite>. If we believe $$TC^0 \neq NC^1$$, then a constant depth transformer would not be able to solve the state tracking problem for arbitrary sequence length. This could explain why transformers fail to generalize to longer sequences and harder problems. If we allow variable depth based on input size, we can construct a transformer with $$O(\log T)$$ layers to solve the state tracking problem of length $$T$$ <d-cite key="liu2023transformerslearnshortcutsautomata"></d-cite>. While a transformer performing next token prediction may not be as expressive as an RNN, allowing it to output intermediate tokens can increase expressivity. A transformer model performing chain of thought for $$O(n)$$ intermediate steps <d-cite key="merrill2024expressivepowertransformerschain"></d-cite> can simulate $$NC^1$$ circuits (see also <d-cite key="li2024chainthoughtempowerstransformers"></d-cite>). 
 
 Recurrent Neural Networks (RNNs) can solve state tracking in a single layer. An RNN maps a sequence $$(x_1,...,x_T)$$ to $$(y_1,...y_T)$$ and is given by the recurrence
+
 $$h_{t+1}=g(h_t, x_t), \ y_t=dec(h_t,x_t)$$
+
 where $$g$$ and $$dec$$ are learnable, nonlinear functions. Let $$x_t=\sigma_t$$ and $$h_t =q_{t-1}$$ be the 1-hot vector representing the state. $$g(-,x_t)$$ can simulate the state transition function $$\delta (- ,\sigma_t)$$ (<d-cite key="merrill2025illusionstatestatespacemodels"></d-cite>, theorem 5.1). In particular, even if we constrain $$g(-,x_t)$$ to be a linear transformation, it can represent the state transition matrix $$M_{\sigma_t}$$, and so linear RNNs with general state matrix can also solve the state tracking problem.
 
 Although state tracking and other relevant problems lie in $$NC^1$$, we will focus on a specific synthetic task, to which any other task in $$NC^1$$ can be reduced.
