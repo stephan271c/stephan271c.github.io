@@ -16,7 +16,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/blog/";
           },
-        },{id: "post-state-tracking-with-sequence-models",
+        },{id: "post-test-time-regression",
+        
+          title: "Test Time Regression",
+        
+        description: "Associative Recall and connections to Online Learning",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/Test-Time-Regression/";
+          
+        },
+      },{id: "post-state-tracking-with-sequence-models",
         
           title: "State Tracking with Sequence Models",
         
