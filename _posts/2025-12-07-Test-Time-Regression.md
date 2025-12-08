@@ -274,7 +274,7 @@ Here we examine the TTT layer with context size 5. This effectively means that t
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="lazy" path="assets/img/2025-12-07-Test-Time-Regression/corr0-ctx5-acc.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+        {% include figure.liquid loading="lazy" path="assets/img/2025-12-07-Test-Time-Regression/corr0.7-ctx5-acc.png" class="img-fluid rounded z-depth-1" zoomable=true %}
     </div>
 </div>
 
